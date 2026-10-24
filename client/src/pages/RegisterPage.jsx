@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -125,7 +124,6 @@ const RegisterPage = () => {
 
     return (
         <div className="font-sans min-h-screen bg-[#f3f3f3] flex flex-col items-center py-4 px-2 sm:px-4">
-            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
 
             {/* Top Navbar / Header */}
             <div className="w-full max-w-[1000px] flex flex-col sm:flex-row items-center sm:items-end justify-between border-b border-[#b9b9b9] pb-2 mb-8 gap-4 sm:gap-0">

@@ -73,7 +73,7 @@ const RiddlePage = () => {
                     setShowError(false);
                     toast.success("QR Code scanned successfully!");
                 },
-                (error) => {
+                () => {
                     // Ignore background scan errors
                 }
             );

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import AdminNavbar from '../../components/AdminNavbar';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const AdminDashboard = () => {
+    const navigate = useNavigate();
     const [contestStatus, setContestStatus] = useState('loading...');
     const [timeoutMinutes, setTimeoutMinutes] = useState(30);
     const [penaltyMinutes, setPenaltyMinutes] = useState(15);
@@ -77,8 +79,25 @@ const AdminDashboard = () => {
                 contestDurationMinutes: Number(contestDurationMinutes)
             }, { withCredentials: true });
             toast.success('Timers updated successfully');
-        } catch (error) {
+        } catch {
             toast.error('Failed to update timers');
+        }
+    };
+
+    const exportLeaderboardCsv = async () => {
+        try {
+            const { data } = await axios.get(`${API_BASE_URL}/leaderboard`, { withCredentials: true });
+            const rows = [['Rank', 'Team', 'Score'], ...(data.leaderboard || []).map(t => [t.rank, t.teamName, t.score])];
+            const csv = rows.map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(',')).join('\n');
+            const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'leaderboard.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error exporting leaderboard', error);
+            toast.error('Failed to export leaderboard');
         }
     };
 
@@ -192,10 +211,10 @@ const AdminDashboard = () => {
                             Quick Actions
                         </div>
                         <div className="p-3 flex flex-col gap-2">
-                            <button className="text-left text-[#0000cc] hover:underline">→ Manage Contest Settings</button>
-                            <button className="text-left text-[#0000cc] hover:underline">→ Add New Problem</button>
-                            <button className="text-left text-[#0000cc] hover:underline">→ Re-judge Submissions</button>
-                            <button className="text-left text-[#0000cc] hover:underline">→ Export Leaderboard (CSV)</button>
+                            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-left text-[#0000cc] hover:underline cursor-pointer">→ Manage Contest Settings</button>
+                            <button onClick={() => navigate('/admin/problems')} className="text-left text-[#0000cc] hover:underline cursor-pointer">→ Add New Problem</button>
+                            <button onClick={() => navigate('/admin/submissions')} className="text-left text-[#0000cc] hover:underline cursor-pointer">→ Re-judge Submissions</button>
+                            <button onClick={exportLeaderboardCsv} className="text-left text-[#0000cc] hover:underline cursor-pointer">→ Export Leaderboard (CSV)</button>
                         </div>
                     </div>
                 </div>

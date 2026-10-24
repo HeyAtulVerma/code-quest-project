@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 
 import LoginPage from "./pages/LoginPage";
@@ -11,7 +11,7 @@ import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import SubmissionsPage from "./pages/SubmissionsPage";
-import ContestPage from "./pages/ContestPage";
+import ContestPage from "./pages/admin/ContestPage";
 import RiddlePage from "./pages/RiddlePage";
 import ProblemPage from "./pages/ProblemPage";
 
@@ -26,44 +26,54 @@ import AdminLeaderboard from "./pages/admin/AdminLeaderboard";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* User Routes */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <LoginPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <RegisterPage />
-            </PublicRoute>
-          }
-        />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/leaderboard" element={<LeaderboardPage />} />
-        <Route path="/submissions" element={<SubmissionsPage />} />
-        <Route path="/contest" element={<ContestPage />} />
-        <Route path="/riddle/:id" element={<RiddlePage />} />
-        <Route path="/problem/:id" element={<ProblemPage />} />
-        {/* Admin Routes */}
-        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/teams" element={<AdminTeams />} />
-        <Route path="/admin/riddles" element={<AdminRiddles />} />{" "}
-        <Route path="/admin/problems" element={<AdminProblems />} />
-        <Route path="/admin/submissions" element={<AdminSubmissions />} />
-        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+      />
+      <BrowserRouter>
+        <Routes>
+          {/* User Routes */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <RegisterPage />
+              </PublicRoute>
+            }
+          />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/submissions" element={<SubmissionsPage />} />
+          <Route path="/contest" element={<ContestPage />} />
+          <Route path="/riddle/:id" element={<RiddlePage />} />
+          <Route path="/problem/:id" element={<ProblemPage />} />
+          {/* Admin Routes */}
+          <Route
+            path="/admin"
+            element={<Navigate to="/admin/login" replace />}
+          />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/teams" element={<AdminTeams />} />
+          <Route path="/admin/riddles" element={<AdminRiddles />} />{" "}
+          <Route path="/admin/problems" element={<AdminProblems />} />
+          <Route path="/admin/submissions" element={<AdminSubmissions />} />
+          <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

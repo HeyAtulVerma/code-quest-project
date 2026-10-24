@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
                 withCredentials: true
             });
             setUser(response.data.team);
-        } catch (error) {
+        } catch {
             setUser(null);
         } finally {
             setLoading(false);

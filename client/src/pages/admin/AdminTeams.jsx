@@ -51,7 +51,8 @@ const AdminTeams = () => {
                 await axios.delete(`${import.meta.env.VITE_API_URL}${endpoint}`, { withCredentials: true });
             }
 
-            toast.success(`Team successfully ${action.toLowerCase()}d!`);
+            const pastTense = { VERIFY: 'verified', UNVERIFY: 'unverified', DISQUALIFY: 'disqualified', DELETE: 'deleted' }[action];
+            toast.success(`Team successfully ${pastTense}!`);
             fetchTeams();
         } catch (error) {
             console.error(`Error performing ${action}:`, error);

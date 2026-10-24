@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = ({ activeTab, maxWidth = "1000px" }) => {
   const navigate = useNavigate();
@@ -38,9 +39,18 @@ const Navbar = ({ activeTab, maxWidth = "1000px" }) => {
           <span className="text-[#0000cc] font-bold">{teamName}</span>
           <span className="mx-2 text-[#b9b9b9]">|</span>
           <button
-            onClick={() => {
+            onClick={async () => {
+              try {
+                await axios.post(
+                  `${import.meta.env.VITE_API_URL}/auth/logout`,
+                  {},
+                  { withCredentials: true },
+                );
+              } catch (error) {
+                console.error("Logout error", error);
+              }
               localStorage.clear();
-              navigate("/login");
+              window.location.href = "/login";
             }}
             className="text-[#0000cc] hover:underline hover:text-[#0000ff] cursor-pointer"
           >

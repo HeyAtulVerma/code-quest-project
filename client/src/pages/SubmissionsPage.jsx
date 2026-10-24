@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 
@@ -11,7 +10,6 @@ const languageMap = {
 };
 
 const SubmissionsPage = () => {
-    const navigate = useNavigate();
     const [submissions, setSubmissions] = useState([]);
 
     const fetchSubmissions = async () => {

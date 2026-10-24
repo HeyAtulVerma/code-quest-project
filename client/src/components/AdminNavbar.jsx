@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminNavbar = ({ activeTab, maxWidth = "1200px" }) => {
     const navigate = useNavigate();
@@ -14,8 +15,12 @@ const AdminNavbar = ({ activeTab, maxWidth = "1200px" }) => {
         { name: 'LEADERBOARD', path: '/admin/leaderboard' },
     ];
 
-    const handleLogout = () => {
-        // Here you would clear admin auth tokens/state
+    const handleLogout = async () => {
+        try {
+            await axios.post(`${import.meta.env.VITE_API_URL}/auth/admin/logout`, {}, { withCredentials: true });
+        } catch (error) {
+            console.error('Admin logout error', error);
+        }
         navigate('/admin/login');
     };
 

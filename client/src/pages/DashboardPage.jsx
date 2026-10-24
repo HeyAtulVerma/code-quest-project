@@ -11,7 +11,7 @@ const DashboardPage = () => {
         const fetchStatus = async () => {
             try {
                 const res = await axios.get(`${import.meta.env.VITE_API_URL}/system/status`);
-                setContestStatus(res.data.contestStatus);
+                setContestStatus(res.data.contestStatus || 'loading');
             } catch (err) {
                 console.error(err);
             }
@@ -64,7 +64,7 @@ const DashboardPage = () => {
                                                 contestStatus === 'paused' ? 'text-[#ff8c00]' :
                                                     contestStatus === 'ended' ? 'text-[#cc0000]' : 'text-[#888]'
                                                 }`}>
-                                                {contestStatus.toUpperCase().replace('_', ' ')}
+                                                {(contestStatus || 'loading').toUpperCase().replace('_', ' ')}
                                             </span>
                                         </td>
                                         <td className="py-3 px-2 border-r border-[#eee] text-[#333] whitespace-nowrap">
@@ -83,7 +83,7 @@ const DashboardPage = () => {
                     </div>
 
                     <div className="mt-6 bg-white border border-[#b9b9b9] text-[13px] shadow-sm rounded-sm p-4 text-[#333]">
-                        <h2 className="text-[#0000cc] font-bold text-[16px] mb-2 border-b border-[#eee] pb-1">Announcements</h2>
+                        <h2 className="text-[#0000cc] font-bold text-[16px] mb-2 border-b border-[#2b1f1f] pb-1">Announcements</h2>
                         <div className="mb-4">
                             <div className="text-[11px] text-[#666] mb-1">By Admin, Today, 10:00</div>
                             <p>Welcome to CodeQuest 2026! Please ensure your team members are fully registered and verified in your profile before the Round 1 contest begins.</p>

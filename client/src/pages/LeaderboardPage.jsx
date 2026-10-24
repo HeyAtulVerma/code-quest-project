@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
 const LeaderboardPage = () => {
-    const navigate = useNavigate();
     const [standings, setStandings] = useState([]);
     const [problems, setProblems] = useState([]);
     const [loading, setLoading] = useState(true);
