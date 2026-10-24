@@ -212,7 +212,7 @@ const RegisterPage = () => {
                                 <span>Team Members (Optional, Max 3)</span>
                                 {teamMembers.length < 3 && (
                                     <button type="button" onClick={addMember} className="bg-[#e4e4e4] border border-[#b9b9b9] hover:bg-[#d0d0d0] px-[8px] py-[2px] text-[#222] font-semibold text-[11px] rounded-sm transition-colors active:bg-[#c0c0c0]">
-                                       {!isSubmitting ? "+ Add Member":"Loading..."}
+                                       +Add Member
                                     </button>
                                 )}
                             </div>
@@ -248,7 +248,7 @@ const RegisterPage = () => {
                                         type="submit"
                                         className="bg-[#e4e4e4] border border-[#b9b9b9] hover:bg-[#d0d0d0] px-[16px] py-[6px] sm:py-[3px] text-[#222] font-bold text-[13px] rounded-sm transition-colors active:bg-[#c0c0c0] w-full sm:w-auto"
                                     >
-                                        Register
+                                        {!isSubmitting ? "Register":"Loading..."}
                                     </button>
                                 </div>
                             </div>
