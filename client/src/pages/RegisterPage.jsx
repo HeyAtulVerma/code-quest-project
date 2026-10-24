@@ -3,8 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+
 const RegisterPage = () => {
     const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [formData, setFormData] = useState({
         teamName: '',
         teamLeaderName: '',
@@ -90,6 +93,12 @@ const RegisterPage = () => {
     };
 
     const handleRegister = async (e) => {
+        if(isSubmitting){
+            toast.error("Prevoius submit is under process")
+            return
+        } 
+            
+        setIsSubmitting(true)
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
@@ -116,6 +125,8 @@ const RegisterPage = () => {
             console.error('Registration error:', err);
             const errorMsg = err.response?.data?.error || err.response?.data?.message || 'Registration failed. Please try again.';
             toast.error(errorMsg);
+        } finally{
+            setIsSubmitting(false)
         }
     };
 
